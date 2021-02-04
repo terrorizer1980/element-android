@@ -158,4 +158,6 @@ interface CryptoService {
     fun getWithHeldMegolmSession(roomId: String, sessionId: String): RoomKeyWithHeldContent?
 
     fun logDbUsageInfo()
+
+    fun ensureOutboundSession(roomId: String)
 }

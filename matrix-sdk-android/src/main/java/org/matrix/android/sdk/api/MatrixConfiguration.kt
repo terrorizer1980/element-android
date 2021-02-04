@@ -17,6 +17,7 @@
 package org.matrix.android.sdk.api
 
 import org.matrix.android.sdk.api.crypto.MXCryptoConfig
+import org.matrix.android.sdk.api.crypto.OutboundSessionKeySharingStrategy
 import java.net.Proxy
 
 data class MatrixConfiguration(
@@ -35,7 +36,8 @@ data class MatrixConfiguration(
          * Optional proxy to connect to the matrix servers
          * You can create one using for instance Proxy(proxyType, InetSocketAddress.createUnresolved(hostname, port)
          */
-        val proxy: Proxy? = null
+        val proxy: Proxy? = null,
+        val outboundSessionKeySharingStrategy: OutboundSessionKeySharingStrategy = OutboundSessionKeySharingStrategy.WhenSendingEvent
 ) {
 
     /**
