@@ -28,6 +28,7 @@ import com.jakewharton.rxrelay2.PublishRelay
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import dagger.assisted.AssistedFactory
+import im.vector.app.BuildConfig
 import im.vector.app.R
 import im.vector.app.core.extensions.exhaustive
 import im.vector.app.core.platform.VectorViewModel
@@ -59,6 +60,7 @@ import org.commonmark.renderer.html.HtmlRenderer
 import org.matrix.android.sdk.api.MatrixCallback
 import org.matrix.android.sdk.api.MatrixPatterns
 import org.matrix.android.sdk.api.NoOpMatrixCallback
+import org.matrix.android.sdk.api.crypto.OutboundSessionKeySharingStrategy
 import org.matrix.android.sdk.api.extensions.tryOrNull
 import org.matrix.android.sdk.api.query.QueryStringValue
 import org.matrix.android.sdk.api.raw.RawService
@@ -171,6 +173,11 @@ class RoomDetailViewModel @AssistedInject constructor(
         // Inform the SDK that the room is displayed
         session.onRoomDisplayed(initialState.roomId)
         chatEffectManager.delegate = this
+
+        // Ensure to share the outbound session keys with all members
+        if (room.isEncrypted() && BuildConfig.outboundSessionKeySharingStrategy == OutboundSessionKeySharingStrategy.WhenEnteringRoom) {
+            room.ensureOutboundSession()
+        }
     }
 
     private fun observePowerLevel() {
@@ -562,6 +569,10 @@ class RoomDetailViewModel @AssistedInject constructor(
             } else {
                 room.userStopsTyping()
             }
+        }
+        // Ensure outbound session keys
+        if (room.isEncrypted() && BuildConfig.outboundSessionKeySharingStrategy == OutboundSessionKeySharingStrategy.WhenTyping) {
+            room.ensureOutboundSession()
         }
     }
 
