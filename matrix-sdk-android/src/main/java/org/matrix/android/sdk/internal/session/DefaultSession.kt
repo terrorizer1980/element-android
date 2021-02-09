@@ -23,7 +23,7 @@ import okhttp3.OkHttpClient
 import org.matrix.android.sdk.api.auth.data.SessionParams
 import org.matrix.android.sdk.api.failure.GlobalError
 import org.matrix.android.sdk.api.pushrules.PushRuleService
-import org.matrix.android.sdk.api.session.InitialSyncProgressService
+import org.matrix.android.sdk.api.session.initsync.InitialSyncProgressService
 import org.matrix.android.sdk.api.session.Session
 import org.matrix.android.sdk.api.session.account.AccountService
 import org.matrix.android.sdk.api.session.accountdata.AccountDataService
